@@ -1,0 +1,34 @@
+const express = require("express");
+const mongoose = require("mongoose");
+const path = require("path");
+const { PORT = 3000 } = process.env;
+const app = express();
+const routes = require("./routes/users.js");
+const bodyParser = require("body-parser");
+const users = require("./models/user");
+
+mongoose.connect("mongodb://localhost:27017/mestodb");
+
+app.use(bodyParser.json());
+
+app.use(express.static(path.join(__dirname, "public")));
+
+const { link } = require("fs");
+
+app.use("/", routes);
+
+app.use((req, res, next) => {
+  req.user = {
+    _id: "637e319e55ee246cfc0c827c", // вставьте сюда _id созданного в предыдущем пункте пользователя
+  };
+
+  next();
+});
+
+app.listen(PORT, () => {
+  console.log(`App listening on port ${PORT}`);
+});
+
+module.exports.createCard = (req, res) => {
+  console.log(req.user._id); // _id станет доступен
+};
