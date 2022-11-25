@@ -1,12 +1,11 @@
 const User = require("../models/user");
 
 module.exports.getUsersById = (req, res) => {
-  if (!User[req.params.id]) {
-    res.send({ message: "Запрашиваемый пользователь не найден" });
-    return;
-  }
-
-  res.status(200).send(User[req.params.id]);
+  User.findById(req.user._id)
+    .then((user) => {
+      res.status(200).send({ data: user });
+    })
+    .catch(err);
 };
 
 module.exports.createUser = (req, res) => {
