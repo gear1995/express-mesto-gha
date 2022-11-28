@@ -3,9 +3,15 @@ const User = require("../models/user");
 module.exports.getUsersById = (req, res) => {
   User.findById(req.user._id)
     .then((user) => {
-      res.status(200).send({ data: user });
+      if (!user) {
+        res.status(400).send({ message: "Нет пользователя с таким id" });
+      }
+      res.status(200).send(user);
     })
-    .catch(err);
+    .catch((err) => {
+      res.status(400).send({ message: "Несуществующий id" });
+      return;
+    });
 };
 
 module.exports.createUser = (req, res) => {
@@ -16,28 +22,34 @@ module.exports.createUser = (req, res) => {
     });
 };
 
-module.exports.getUsers = (req, res) => {
-  User.find({}).then((users) => res.send({ data: users }));
+module.exports.getUsers = (req, res, next) => {
+  User.find({})
+    .then((users) => res.send({ data: users }))
+    .catch(next);
 };
 
 module.exports.updateProfile = (req, res) => {
   const { name, about } = req.body;
 
-  User.findByIdAndUpdate(req.user._id, { name, about })
+  User.findByIdAndUpdate(req.user._id, { name, about }, { new: true })
     .then((data) => {
       res.status(200).send(data);
     })
-    .catch(err);
+    .catch((err) => {
+      res.status(400).send({ message: "Некоректные данные" });
+      return;
+    });
 };
 
 module.exports.updateAvatar = (req, res, next) => {
   const { avatar } = req.body;
 
-  User.findByIdAndUpdate(req.user._id, { avatar })
+  User.findByIdAndUpdate(req.user._id, { avatar }, { new: true })
     .then((data) => {
       res.status(200).send(data);
     })
     .catch((err) => {
+      res.status(400).send({ message: "Некоректные данные" });
       return;
     });
 };

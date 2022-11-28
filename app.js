@@ -12,8 +12,6 @@ app.use(bodyParser.json());
 
 app.use(express.static(path.join(__dirname, "public")));
 
-/* const { link } = require("fs"); */
-
 app.use("/", routes);
 
 app.use((req, res, next) => {
@@ -27,7 +25,3 @@ app.use((req, res, next) => {
 app.listen(PORT, () => {
   console.log(`App listening on port ${PORT}`);
 });
-
-/* module.exports.createCard = (req, res) => {
-  console.log(req.user._id); // _id станет доступен
-}; */
