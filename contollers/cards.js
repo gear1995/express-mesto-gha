@@ -6,10 +6,12 @@ module.exports.getCards = (req, res) => {
 
 module.exports.postCard = (req, res) => {
   const { name, link } = req.body;
+
   Card.create({ name, link })
     .then((data) => res.status(201).send(data))
     .catch((err) => {
       res.status(400).send({ message: "Некорректные данные" });
+      return;
     });
 };
 
@@ -34,17 +36,17 @@ module.exports.likeCard = (req, res) => {
     req.params.cardId,
     { $addToSet: { likes: req.user._id } }, // добавить _id в массив, если его там нет
     { new: true }
-      .then((card) => {
-        if (!card) {
-          res.status(400).send({ message: "Некорректный id карточки" });
-        }
-        res.status(400).send(card);
-      })
-      .catch((err) => {
-        res.status(400).send({ message: "Переданы некорректные данные" });
-        return;
-      })
-  );
+  )
+    .then((card) => {
+      if (!card) {
+        res.status(400).send({ message: "Некорректный id карточки" });
+      }
+      res.status(400).send(card);
+    })
+    .catch((err) => {
+      res.status(400).send({ message: "Переданы некорректные данные" });
+      return;
+    });
 };
 
 module.exports.dislikeCard = (req, res) => {
