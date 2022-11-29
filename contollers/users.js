@@ -1,7 +1,7 @@
 const User = require("../models/user");
 
 module.exports.getUsersById = (req, res, next) => {
-  User.findById(req.user._id)
+  User.findById(req.params.userId)
     .then((user) => {
       if (!user) {
         res.status(400).send({ message: "Нет пользователя с таким id" });
