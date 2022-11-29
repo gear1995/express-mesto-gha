@@ -1,10 +1,12 @@
 const Card = require("../models/card");
 
-module.exports.getCards = (req, res) => {
-  Card.find({}).then((cards) => res.send({ data: cards }));
+module.exports.getCards = (req, res, next) => {
+  Card.find({})
+    .then((cards) => res.send({ data: cards }))
+    .catch(next);
 };
 
-module.exports.postCard = (req, res) => {
+module.exports.postCard = (req, res, next) => {
   const { name, link } = req.body;
 
   Card.create({ name, link })
@@ -13,9 +15,10 @@ module.exports.postCard = (req, res) => {
       res.status(400).send({ message: "Некорректные данные" });
       return;
     });
+  next(err);
 };
 
-module.exports.deleteCard = (req, res) => {
+module.exports.deleteCard = (req, res, next) => {
   const { cardId } = req.params;
   Card.findById(cardId)
     .then((card) => {
@@ -29,9 +32,10 @@ module.exports.deleteCard = (req, res) => {
       res.status(400).send({ message: "Некорректный id" });
       return;
     });
+  next(err);
 };
 
-module.exports.likeCard = (req, res) => {
+module.exports.likeCard = (req, res, next) => {
   Card.findByIdAndUpdate(
     req.params.cardId,
     { $addToSet: { likes: req.user._id } }, // добавить _id в массив, если его там нет
@@ -47,11 +51,13 @@ module.exports.likeCard = (req, res) => {
       res.status(400).send({ message: "Переданы некорректные данные" });
       return;
     });
+  next(err);
 };
 
-module.exports.dislikeCard = (req, res) => {
+module.exports.dislikeCard = (req, res, next) => {
+  const { cardId } = req.params;
   Card.findByIdAndUpdate(
-    req.params.cardId,
+    cardId,
     { $pull: { likes: req.user._id } }, // убрать _id из массива
     { new: true }
   )
@@ -65,4 +71,5 @@ module.exports.dislikeCard = (req, res) => {
       res.status(400).send({ message: "Переданы некорректные данные" });
       return;
     });
+  next(err);
 };
