@@ -20,7 +20,7 @@ module.exports.deleteCard = (req, res) => {
   Card.findById(cardId)
     .then((card) => {
       if (!card) {
-        res.status(400).send({ message: "Нет карточки с таким id" });
+        res.status(404).send({ message: "Нет карточки с таким id" });
       }
       return Card.remove(card);
     })
@@ -39,7 +39,7 @@ module.exports.likeCard = (req, res) => {
   )
     .then((card) => {
       if (!card) {
-        res.status(400).send({ message: "Некорректный id карточки" });
+        res.status(404).send({ message: "Некорректный id карточки" });
       }
       res.status(400).send(card);
     })
@@ -57,9 +57,9 @@ module.exports.dislikeCard = (req, res) => {
   )
     .then((card) => {
       if (!card) {
-        res.status(400).send({ message: "Некорректный id карточки" });
+        res.status(404).send({ message: "Некорректный id карточки" });
       }
-      res.status(400).send(card);
+      res.status(200).send(card);
     })
     .catch((err) => {
       res.status(400).send({ message: "Переданы некорректные данные" });

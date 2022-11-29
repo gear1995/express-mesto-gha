@@ -4,7 +4,7 @@ module.exports.getUsersById = (req, res, next) => {
   User.findById(req.params.userId)
     .then((user) => {
       if (!user) {
-        res.status(400).send({ message: "Нет пользователя с таким id" });
+        res.status(404).send({ message: "Нет пользователя с таким id" });
       }
       res.status(200).send(user);
     })
