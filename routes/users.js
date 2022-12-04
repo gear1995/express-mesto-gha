@@ -16,6 +16,6 @@ router.get("/", getUsers);
 
 router.patch("/me", updateProfile);
 
-router.patch("/me/avatar ", updateAvatar);
+router.patch("/me/avatar", updateAvatar);
 
 module.exports = router;
