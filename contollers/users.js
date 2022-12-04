@@ -1,6 +1,6 @@
 const User = require("../models/user");
 
-module.exports.getUsersById = (req, res, next) => {
+module.exports.getUsersById = (req, res) => {
   User.findById(req.params.userId)
     .then((user) => {
       if (!user) {
@@ -9,59 +9,67 @@ module.exports.getUsersById = (req, res, next) => {
       res.status(200).send(user);
     })
     .catch((err) => {
-      res.status(400).send({ message: "Несуществующий id" });
-      return;
+      if (err.name === "CastError") {
+        res.status(400).send({ message: "Несуществующий id" });
+        return;
+      }
+      res.status(500).send({ message: "Ошибка сервера" });
     });
-  next(err);
 };
 
-module.exports.createUser = (req, res, next) => {
+module.exports.createUser = (req, res) => {
   const { name, about, avatar } = req.body;
   User.create({ name, about, avatar })
-    .then((data) =>
-      res.status(201).send({
-        name: data.name,
-        about: data.about,
-        avatar: data.avatar,
-        _id: data._id,
-      })
-    )
+    .then((user) => res.status(201).send({ data: user }))
     .catch((err) => {
-      res.status(400).send({ message: "Некорректные данные" });
+      if (err.name === "ValidationError") {
+        res.status(400).send({ message: "Некорректные данные" });
+        return;
+      }
+      res.status(500).send({ message: "Ошибка сервера" });
     });
-  next(err);
 };
 
-module.exports.getUsers = (req, res, next) => {
+module.exports.getUsers = (req, res) => {
   User.find({})
     .then((users) => res.send({ data: users }))
-    .catch(next);
+    .catch(() => res.status(500).send({ message: "Ошибка сервера" }));
 };
 
-module.exports.updateProfile = (req, res, next) => {
+module.exports.updateProfile = (req, res) => {
   const { name, about } = req.body;
 
   User.findByIdAndUpdate(req.user._id, { name, about }, { new: true })
-    .then((data) => {
-      res.status(200).send(data);
+    .then((user) => {
+      if (!user) {
+        res.status(404).send({ message: "Нет пользователя с таким id" });
+      }
+      res.status(200).send(user);
     })
     .catch((err) => {
-      res.status(400).send({ message: "Некоректные данные" });
-      return;
+      if (err.name === "CastError") {
+        res.status(400).send({ message: "Некоректные данные" });
+        return;
+      }
+      res.status(500).send({ message: "Ошибка сервера" });
     });
-  next(err);
 };
 
-module.exports.updateAvatar = (req, res, next) => {
+module.exports.updateAvatar = (req, res) => {
   const { avatar } = req.body;
 
   User.findByIdAndUpdate(req.user._id, { avatar }, { new: true })
-    .then((data) => {
-      res.status(200).send(data);
+    .then((user) => {
+      if (!user) {
+        res.status(404).send({ message: "Нет пользователя с таким id" });
+      }
+      res.status(200).send(user);
     })
     .catch((err) => {
-      res.status(400).send({ message: "Некоректные данные" });
-      return;
+      if (err.name === "CastError") {
+        res.status(400).send({ message: "Некоректные данные" });
+        return;
+      }
+      res.status(500).send({ message: "Ошибка сервера" });
     });
-  next(err);
 };
