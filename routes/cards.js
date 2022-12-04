@@ -8,14 +8,14 @@ const {
   dislikeCard,
 } = require("../contollers/users");
 
-router.get("/", getCards);
+router.get("/cards", getCards);
 
-router.post("/", postCard);
+router.post("/cards", postCard);
 
-router.delete("/:cardId", deleteCard);
+router.delete("/cards/:cardId", deleteCard);
 
-router.put("/:cardId/likes", likeCard);
+router.put("/cards/:cardId/likes", likeCard);
 
-router.delete("/:cardId/likes", dislikeCard);
+router.delete("/cards/:cardId/likes", dislikeCard);
 
 module.exports = router;

@@ -14,8 +14,8 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 //app.use(express.static(path.join(__dirname, "public")));
 
-app.use("/users", userRouter);
-app.use("/cards", cardRouter);
+app.use("/", userRouter);
+app.use("/", cardRouter);
 
 app.use((req, res, next) => {
   req.user = {
