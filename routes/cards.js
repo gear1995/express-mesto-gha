@@ -6,16 +6,16 @@ const {
   deleteCard,
   likeCard,
   dislikeCard,
-} = require("../contollers/users");
+} = require("../contollers/cards");
 
-router.get("/cards", getCards);
+router.get("/", getCards);
 
-router.post("/cards", postCard);
+router.post("/", postCard);
 
-router.delete("/cards/:cardId", deleteCard);
+router.delete("/:cardId", deleteCard);
 
-router.put("/cards/:cardId/likes", likeCard);
+router.put("/:cardId/likes", likeCard);
 
-router.delete("/cards/:cardId/likes", dislikeCard);
+router.delete("/:cardId/likes", dislikeCard);
 
 module.exports = router;
