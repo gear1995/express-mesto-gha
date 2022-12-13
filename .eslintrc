@@ -1,12 +1,11 @@
 {
   "extends": "airbnb-base",
   "rules": {
-    "no-param-reassign": 0,
     "no-underscore-dangle": [
-      "error",
+      "warn",
       {
         "allow": ["_id"]
       }
-    ]
+  ]
   }
 }
