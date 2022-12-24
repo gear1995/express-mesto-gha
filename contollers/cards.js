@@ -69,7 +69,7 @@ module.exports.dislikeCard = (req, res) => {
   )
     .then((card) => {
       if (!card) {
-        res.status(404).send({ message: 'Некорректный id карточки' });
+        res.status(400).send({ message: 'Некорректный id карточки' });
       }
       res.status(200).send(card);
     })
@@ -77,5 +77,6 @@ module.exports.dislikeCard = (req, res) => {
       if (err.name === 'CastError') {
         res.status(400).send({ message: 'Переданы некорректные данные' });
       }
+      res.status(500).send({ message: 'Ошибка сервера' });
     });
 };
