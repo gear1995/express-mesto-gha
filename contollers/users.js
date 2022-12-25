@@ -42,7 +42,7 @@ module.exports.updateProfile = (req, res) => {
   User.findByIdAndUpdate(
     req.user._id,
     { name, about },
-    { new: true/* , runValidators: true */ },
+    { new: true, runValidators: true },
   )
     .then((user) => {
       if (!user) {
@@ -52,7 +52,7 @@ module.exports.updateProfile = (req, res) => {
       res.send(user);
     })
     .catch((err) => {
-      if (err.name === 'CastError') {
+      if (err.name === 'CastError' || err.name === 'ValidationError') {
         res.status(400).send({ message: 'Некоректные данные' });
         return;
       }
@@ -71,7 +71,7 @@ module.exports.updateAvatar = (req, res) => {
       res.status(200).send(user);
     })
     .catch((err) => {
-      if (err.name === 'CastError') {
+      if (err.name === 'CastError' || err.name === 'ValidationError') {
         res.status(400).send({ message: 'Некоректные данные' });
         return;
       }
