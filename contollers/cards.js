@@ -26,7 +26,7 @@ module.exports.deleteCard = (req, res) => {
   Card.findById(cardId)
     .then((card) => {
       if (!card) {
-        res.status(400).send({ message: 'Нет карточки с таким id' });
+        res.status(404).send({ message: 'Нет карточки с таким id' });
       }
       return Card.remove(card);
     })

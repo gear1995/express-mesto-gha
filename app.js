@@ -13,9 +13,6 @@ const app = express();
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
-app.use('/users', userRouter);
-app.use('/cards', cardRouter);
-
 app.use((req, res, next) => {
   req.user = {
     _id: '637e319e55ee246cfc0c827c',
@@ -23,6 +20,9 @@ app.use((req, res, next) => {
 
   next();
 });
+
+app.use('/users', userRouter);
+app.use('/cards', cardRouter);
 
 app.use((req, res) => {
   res.status(404).send({ message: 'Запрашиваемый ресурс не найден' });
