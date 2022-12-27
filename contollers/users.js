@@ -13,7 +13,7 @@ module.exports.getUsersById = (req, res) => {
         res.status(400).send({ message: 'Несуществующий id' });
         return;
       }
-      res.status(500).send({ message: 'Ошибка сервера' });
+      res.status(500).send({ message: 'На сервере произошла ошибка' });
     });
 };
 
@@ -26,14 +26,14 @@ module.exports.createUser = (req, res) => {
         res.status(400).send({ message: 'Некорректные данные' });
         return;
       }
-      res.status(500).send({ message: 'Ошибка сервера' });
+      res.status(500).send({ message: 'На сервере произошла ошибка' });
     });
 };
 
 module.exports.getUsers = (req, res) => {
   User.find({})
     .then((users) => res.send({ data: users }))
-    .catch(() => res.status(500).send({ message: 'Ошибка сервера' }));
+    .catch(() => res.status(500).send({ message: 'На сервере произошла ошибка' }));
 };
 
 module.exports.updateProfile = (req, res) => {
@@ -59,7 +59,7 @@ module.exports.updateProfile = (req, res) => {
         res.status(400).send({ message: 'Некоректные данные' });
         return;
       }
-      res.status(500).send({ message: 'Ошибка сервера' });
+      res.status(500).send({ message: 'На сервере произошла ошибка' });
     });
 };
 
@@ -85,6 +85,6 @@ module.exports.updateAvatar = (req, res) => {
         res.status(400).send({ message: 'Некоректные данные' });
         return;
       }
-      res.status(500).send({ message: 'Ошибка сервера' });
+      res.status(500).send({ message: 'На сервере произошла ошибка' });
     });
 };
