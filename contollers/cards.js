@@ -9,7 +9,11 @@ module.exports.getCards = (req, res) => {
 module.exports.postCard = (req, res) => {
   const { name, link } = req.body;
   const owner = req.user._id;
-
+  /*   module.exports.createCard = (req, res) => Card.create({
+    name: req.body.name,
+    link: req.body.link,
+    owner: req.user._id // используем req.user
+  });  */
   Card.create({ name, link, owner })
     .then((data) => res.status(201).send(data))
     .catch((err) => {

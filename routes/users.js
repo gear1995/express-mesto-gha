@@ -2,13 +2,10 @@ const router = require('express').Router();
 
 const {
   getUsers,
-  createUser,
   getUsersById,
   updateProfile,
   updateAvatar,
 } = require('../contollers/users');
-
-router.post('/', createUser);
 
 router.get('/:userId', getUsersById);
 
