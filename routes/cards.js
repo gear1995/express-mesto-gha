@@ -8,9 +8,11 @@ const {
   dislikeCard,
 } = require('../contollers/cards');
 
+const { validatePostCard } = require('../middlewares/validator');
+
 router.get('/', getCards);
 
-router.post('/', postCard);
+router.post('/', validatePostCard, postCard);
 
 router.delete('/:cardId', deleteCard);
 
