@@ -7,10 +7,7 @@ const cardRouter = require('./routes/cards');
 const auth = require('./middlewares/auth');
 const NotFoundError = require('./errors/not-found-error');
 
-const {
-  createUser,
-  login,
-} = require('./contollers/users');
+const { createUser, login } = require('./contollers/users');
 const { validateLogin, validateCreateUser } = require('./middlewares/validator');
 
 mongoose.connect('mongodb://localhost:27017/mestodb', {

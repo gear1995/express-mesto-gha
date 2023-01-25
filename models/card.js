@@ -3,13 +3,13 @@ const mongoose = require('mongoose');
 const cardSchema = new mongoose.Schema({
   name: {
     type: String,
-    required: true,
-    minlength: 2,
-    maxlength: 30,
+    required: [true, 'Введите название карточки'],
+    minlength: [2, 'Название карточки должно быть длиннее 2 символов'],
+    maxlength: [30, 'Название карточки должно быть не длиннее 30 символов'],
   },
   link: {
     type: String,
-    required: true,
+    required: [true, 'Введите URL'],
     validate: {
       validator(cardLink) {
         return /^(https?:\/\/)?([\w-]{1,32}\.[\w-]{1,32})[^\s@]*/gm.test(cardLink);
