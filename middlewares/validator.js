@@ -29,7 +29,7 @@ module.exports.validatePostCard = celebrate({
 module.exports.validateLogin = celebrate({
   body: Joi.object().keys({
     email: Joi.string().required().email(),
-    password: Joi.string().required().min(8),
+    password: Joi.string().required(),
   }),
 });
 
@@ -39,7 +39,7 @@ module.exports.validateCreateUser = celebrate({
     about: Joi.string().required().min(2).max(30),
     avatar: Joi.string().required().uri({ scheme: ['http', 'https'] }),
     email: Joi.string().required().email(),
-    password: Joi.string().required().min(8),
+    password: Joi.string().required(),
   }),
 });
 
