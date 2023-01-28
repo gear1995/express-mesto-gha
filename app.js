@@ -1,6 +1,7 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const { errors } = require('celebrate');
+const bodyParser = require('body-parser');
 const userRouter = require('./routes/users');
 const cardRouter = require('./routes/cards');
 const NotFoundError = require('./errors/not-found-error');
@@ -15,8 +16,8 @@ mongoose.connect('mongodb://localhost:27017/mestodb', {
 const { PORT = 3000 } = process.env;
 const app = express();
 
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
 
 app.post('/signin', validateLogin, login);
 app.post('/signup', validateCreateUser, createUser);
