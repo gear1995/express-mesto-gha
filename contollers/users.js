@@ -20,9 +20,16 @@ module.exports.login = (req, res, next) => {
     .catch(next);
 };
 
+module.exports.getCurrentUser = (req, res, next) => {
+  User.findById(req.user._id)
+    .then((user) => {
+      res.status(200).send({ data: user });
+    })
+    .catch(next);
+};
+
 module.exports.getUsersById = (req, res, next) => {
-  const userId = req.user._id;
-  User.findById(userId)
+  User.findById(req.params.userId)
     .then((user) => {
       if (!user) {
         throw new NotFoundError('Нет пользователя с таким id');

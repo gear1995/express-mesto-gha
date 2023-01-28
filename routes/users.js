@@ -6,6 +6,7 @@ const {
   getUsersById,
   updateProfile,
   updateAvatar,
+  getCurrentUser,
 } = require('../contollers/users');
 
 const { validateUpdateAvatar, validateUpdateProfile, validateGetUsersById } = require('../middlewares/validator');
@@ -18,6 +19,6 @@ router.patch('/me', auth, validateUpdateProfile, updateProfile);
 
 router.patch('/me/avatar', auth, validateUpdateAvatar, updateAvatar);
 
-router.get('/me', getUsersById);
+router.get('/me', getCurrentUser);
 
 module.exports = router;
