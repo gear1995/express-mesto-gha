@@ -1,5 +1,5 @@
 function validateUrl(url) {
-  const regEx = /^(https?:\/\/)?([\w-]{1,32}\.[\w-]{1,32})[^\s@]*/gm;
+  const regEx = /https?:\/\/(www)?[0-9a-z\-._~:/?#[\]@!$&'()*+,;=]+#?$/i;
 
   if (regEx.test(url)) {
     return url;
