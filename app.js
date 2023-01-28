@@ -3,7 +3,6 @@ const mongoose = require('mongoose');
 const { errors } = require('celebrate');
 const userRouter = require('./routes/users');
 const cardRouter = require('./routes/cards');
-const auth = require('./middlewares/auth');
 const NotFoundError = require('./errors/not-found-error');
 
 const { createUser, login } = require('./contollers/users');
@@ -22,8 +21,8 @@ app.use(express.urlencoded({ extended: true }));
 app.post('/signin', validateLogin, login);
 app.post('/signup', validateCreateUser, createUser);
 
-app.use('/users', auth, userRouter);
-app.use('/cards', auth, cardRouter);
+app.use('/users', userRouter);
+app.use('/cards', cardRouter);
 
 app.use((req, res, next) => {
   next(new NotFoundError('Запрашиваемый ресурс не найден'));
