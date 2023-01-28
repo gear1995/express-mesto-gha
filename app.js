@@ -1,6 +1,5 @@
 const express = require('express');
 const mongoose = require('mongoose');
-//const bodyParser = require('body-parser');
 const { errors } = require('celebrate');
 const userRouter = require('./routes/users');
 const cardRouter = require('./routes/cards');

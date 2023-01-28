@@ -1,8 +1,9 @@
 const { celebrate, Joi } = require('celebrate');
+const { validateUrl } = require('../utils/config');
 
 module.exports.validateUpdateAvatar = celebrate({
   body: Joi.object().keys({
-    avatar: Joi.string().required().uri({ scheme: ['http', 'https'] }),
+    avatar: Joi.string().required().custom(validateUrl),
   }),
 });
 
@@ -22,7 +23,7 @@ module.exports.validateGetUsersById = celebrate({
 module.exports.validatePostCard = celebrate({
   body: Joi.object().keys({
     name: Joi.string().required().min(2).max(30),
-    link: Joi.string().required().uri({ scheme: ['http', 'https'] }),
+    link: Joi.string().required().custom(validateUrl),
   }),
 });
 
@@ -37,7 +38,7 @@ module.exports.validateCreateUser = celebrate({
   body: Joi.object().keys({
     name: Joi.string().required().min(2).max(30),
     about: Joi.string().required().min(2).max(30),
-    avatar: Joi.string().required().uri({ scheme: ['http', 'https'] }),
+    avatar: Joi.string().required().custom(validateUrl),
     email: Joi.string().required().email(),
     password: Joi.string().required(),
   }),
