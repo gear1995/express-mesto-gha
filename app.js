@@ -5,6 +5,7 @@ const bodyParser = require('body-parser');
 const userRouter = require('./routes/users');
 const cardRouter = require('./routes/cards');
 const NotFoundError = require('./errors/not-found-error');
+const auth = require('./middlewares/auth');
 
 const { createUser, login } = require('./contollers/users');
 const { validateLogin, validateCreateUser } = require('./middlewares/validator');
@@ -19,8 +20,8 @@ const app = express();
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
-app.post('/signin', validateLogin, login);
-app.post('/signup', validateCreateUser, createUser);
+app.post('/signin', auth, validateLogin, login);
+app.post('/signup', auth, validateCreateUser, createUser);
 
 app.use('/users', userRouter);
 app.use('/cards', cardRouter);
