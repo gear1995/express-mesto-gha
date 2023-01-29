@@ -20,11 +20,11 @@ const app = express();
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
-app.post('/signin', auth, validateLogin, login);
-app.post('/signup', auth, validateCreateUser, createUser);
+app.post('/signin', validateLogin, login);
+app.post('/signup', validateCreateUser, createUser);
 
-app.use('/users', userRouter);
-app.use('/cards', cardRouter);
+app.use('/users', auth, userRouter);
+app.use('/cards', auth, cardRouter);
 
 app.use((req, res, next) => {
   next(new NotFoundError('Запрашиваемый ресурс не найден'));
