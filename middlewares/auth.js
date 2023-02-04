@@ -2,7 +2,8 @@ const jwt = require('jsonwebtoken');
 const UnautorizedError = require('../errors/unauthorized-error');
 
 module.exports = (req, res, next) => {
-  const { autorization } = req.cookies;
+  const { autorization } = req.headers;
+  console.log(autorization);
 
   if (!autorization || !autorization.startsWith('Bearer ')) {
     throw new UnautorizedError('Необходимо зарегистрироваться');
