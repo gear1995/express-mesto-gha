@@ -1,16 +1,16 @@
-const jwt = require('jsonwebtoken');
+const jwtoken = require('jsonwebtoken');
 const UnautorizedError = require('../errors/unauthorized-error');
 
 module.exports = (req, res, next) => {
-  const { auth } = req.cookies;
+  const { jwt } = req.cookies;
 
-  if (!auth) {
+  if (!jwt) {
     throw new UnautorizedError('Необходимо зарегистрироваться');
   }
 
   let payload;
   try {
-    payload = jwt.verify(auth, 'some-secret-key');
+    payload = jwtoken.verify(jwt, 'some-secret-key');
   } catch (err) {
     // отправим ошибку, если не получилось
     throw new UnautorizedError('Необходима авторизация, истекший токен');
