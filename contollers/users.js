@@ -21,7 +21,6 @@ module.exports.login = (req, res, next) => {
           httpOnly: true,
         })
         .send({ jwt: token });
-      //res.status(200).send({ token });
     })
     .catch(next);
 };
