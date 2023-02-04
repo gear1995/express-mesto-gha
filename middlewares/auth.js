@@ -11,7 +11,7 @@ module.exports = (req, res, next) => {
 
   let payload;
   try {
-    payload = jwt.verify(token, 'some-secret-key');
+    payload = jwt.verify(autorization, 'some-secret-key');
   } catch (err) {
     // отправим ошибку, если не получилось
     next(new UnautorizedError('Необходима авторизация, истекший токен'));
@@ -20,5 +20,3 @@ module.exports = (req, res, next) => {
   req.user = payload;
   next();
 };
-/* const { autorization } = req.headers; */
-//const token = autorization.replace('Bearer ', '');
