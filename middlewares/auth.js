@@ -2,14 +2,13 @@ const jwt = require('jsonwebtoken');
 const UnautorizedError = require('../errors/unauthorized-error');
 
 module.exports = (req, res, next) => {
-  const { autorization } = req.headers;
-  console.log(autorization);
-
+  /* const { autorization } = req.headers; */
+  const { autorization } = req.cookies;
   if (!autorization || !autorization.startsWith('Bearer ')) {
     throw new UnautorizedError('Необходимо зарегистрироваться');
   }
 
-  const token = autorization.replace('Bearer ', '');
+  //const token = autorization.replace('Bearer ', '');
   let payload;
   try {
     payload = jwt.verify(token, 'some-secret-key');
