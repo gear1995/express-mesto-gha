@@ -4,7 +4,7 @@ const UnautorizedError = require('../errors/unauthorized-error');
 module.exports = (req, res, next) => {
   const { autorization } = req.cookies;
 
-  if (!autorization || !autorization.startsWith('Bearer ')) {
+  if (!autorization) {
     throw new UnautorizedError('Необходимо зарегистрироваться');
   }
 
