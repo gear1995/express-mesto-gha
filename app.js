@@ -26,8 +26,8 @@ app.post('/signin', validateLogin, login);
 app.post('/signup', validateCreateUser, createUser);
 
 app.use(auth);
-app.use('/users', auth, userRouter);
-app.use('/cards', auth, cardRouter);
+app.use('/users', userRouter);
+app.use('/cards', cardRouter);
 
 app.use((req, res, next) => {
   next(new NotFoundError('Запрашиваемый ресурс не найден'));
